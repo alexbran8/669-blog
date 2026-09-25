@@ -49,3 +49,9 @@ input:-webkit-autofill:focus {
   display: inline-block;
   vertical-align: middle;
 }
+
+@media (max-width: 639px) {
+  input[role='combobox'] + kbd {
+    display: none;
+  }
+}

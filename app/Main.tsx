@@ -4,6 +4,8 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
 import { FormattedDate, FormattedMessage, useIntl } from 'react-intl'
+import NextImage from 'next/image'
+import coverPhoto from '@/data/cover-photo-blurred.png'
 
 const MAX_DISPLAY = 5
 
@@ -11,6 +13,19 @@ export default function Home({ posts }) {
   const intl = useIntl()
   return (
     <>
+      <div className="relative mb-8 h-80 overflow-hidden rounded-2xl sm:h-96 lg:h-[30rem]">
+        <NextImage
+          src={coverPhoto}
+          alt={intl.formatMessage({ id: 'home.coverAlt' })}
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, 1200px"
+          className="object-cover object-[center_20%]"
+        />
+      </div>
+      <p className="mb-10 text-center text-xl font-medium tracking-wide text-gray-700 dark:text-gray-300 sm:text-2xl">
+        <FormattedMessage id="home.coverSubtitle" defaultMessage="Cycling and bicycle mechanics" />
+      </p>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
