@@ -3,6 +3,7 @@ const siteMetadata = {
   title: 'Cycling Blog',
   author: 'Alexandru Bran',
   headerTitle: 'Cycling Blog',
+  showLogo: false,
   description: 'Enjoy my latest posts',
   language: 'en-us',
   theme: 'system', // system, dark or light

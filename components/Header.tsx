@@ -17,9 +17,11 @@ const Header = () => {
       <div>
         <Link href="/" aria-label={intl.formatMessage({ id: 'site.title' })}>
           <div className="flex items-center justify-between">
-            <div className="mr-3">
-              <Logo />
-            </div>
+            {siteMetadata.showLogo && (
+              <div className="mr-3">
+                <Logo />
+              </div>
+            )}
             {typeof siteMetadata.headerTitle === 'string' ? (
               <div className="hidden h-6 text-2xl font-semibold sm:block">
                 <FormattedMessage id="site.title" defaultMessage="Cycling Blog" />
