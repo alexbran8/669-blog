@@ -4,9 +4,12 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import Link from './Link'
 import headerNavLinks from '@/data/headerNavLinks'
+import { FormattedMessage, useIntl } from 'react-intl'
+import LocaleSwitcher from './LocaleSwitcher'
 
 const MobileNav = () => {
   const [navShow, setNavShow] = useState(false)
+  const intl = useIntl()
 
   const onToggleNav = () => {
     setNavShow((status) => {
@@ -22,7 +25,11 @@ const MobileNav = () => {
 
   return (
     <>
-      <button aria-label="Toggle Menu" onClick={onToggleNav} className="sm:hidden">
+      <button
+        aria-label={intl.formatMessage({ id: 'nav.toggleMenu' })}
+        onClick={onToggleNav}
+        className="sm:hidden"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
@@ -70,7 +77,7 @@ const MobileNav = () => {
                           className="text-2xl font-bold tracking-widest text-gray-900 hover:text-primary-500 dark:text-gray-100 dark:hover:text-primary-400"
                           onClick={onToggleNav}
                         >
-                          {link.title}
+                          <FormattedMessage id={link.messageId} defaultMessage={link.title} />
                         </Link>
                       </div>
                     ))}
@@ -79,7 +86,7 @@ const MobileNav = () => {
                   <div className="flex justify-end">
                     <button
                       className="mr-8 mt-11 h-8 w-8"
-                      aria-label="Toggle Menu"
+                      aria-label={intl.formatMessage({ id: 'nav.toggleMenu' })}
                       onClick={onToggleNav}
                     >
                       <svg
@@ -95,6 +102,9 @@ const MobileNav = () => {
                         />
                       </svg>
                     </button>
+                  </div>
+                  <div className="fixed bottom-8 left-12">
+                    <LocaleSwitcher />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

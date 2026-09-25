@@ -13,6 +13,8 @@ import PostBanner from '@/layouts/PostBanner'
 import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
+import { isLocale } from '@/i18n/config'
+import { findPostForLocale, getPostsForLocale } from '@/i18n/content'
 
 const defaultLayout = 'PostLayout'
 const layouts = {
@@ -24,10 +26,13 @@ const layouts = {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string[] }
+  params: { slug: string[]; locale?: string }
 }): Promise<Metadata | undefined> {
   const slug = decodeURI(params.slug.join('/'))
-  const post = allBlogs.find((p) => p.slug === slug)
+  const post =
+    params.locale && isLocale(params.locale)
+      ? findPostForLocale(allBlogs, slug, params.locale)
+      : allBlogs.find((p) => p.slug === slug)
   const authorList = post?.authors || ['default']
   const authorDetails = authorList.map((author) => {
     const authorResults = allAuthors.find((p) => p.slug === author)
@@ -52,10 +57,11 @@ export async function generateMetadata({
 
   return {
     title: post.title,
-    description: post.summary,
+    description: post.metaDescription || post.summary,
+    keywords: post.keywords?.length ? post.keywords : post.tags,
     openGraph: {
       title: post.title,
-      description: post.summary,
+      description: post.metaDescription || post.summary,
       siteName: siteMetadata.title,
       locale: 'en_US',
       type: 'article',
@@ -68,7 +74,7 @@ export async function generateMetadata({
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.summary,
+      description: post.metaDescription || post.summary,
       images: imageList,
     },
   }
@@ -78,10 +84,12 @@ export const generateStaticParams = async () => {
   return allBlogs.map((p) => ({ slug: p.slug.split('/').map((name) => decodeURI(name)) }))
 }
 
-export default async function Page({ params }: { params: { slug: string[] } }) {
+export default async function Page({ params }: { params: { slug: string[]; locale?: string } }) {
   const slug = decodeURI(params.slug.join('/'))
   // Filter out drafts in production
-  const sortedCoreContents = allCoreContent(sortPosts(allBlogs))
+  const localePosts =
+    params.locale && isLocale(params.locale) ? getPostsForLocale(allBlogs, params.locale) : allBlogs
+  const sortedCoreContents = allCoreContent(sortPosts(localePosts))
   const postIndex = sortedCoreContents.findIndex((p) => p.slug === slug)
   if (postIndex === -1) {
     return notFound()
@@ -89,7 +97,7 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
 
   const prev = sortedCoreContents[postIndex + 1]
   const next = sortedCoreContents[postIndex - 1]
-  const post = allBlogs.find((p) => p.slug === slug) as Blog
+  const post = localePosts.find((p) => p.slug === slug) as Blog
   const authorList = post?.authors || ['default']
   const authorDetails = authorList.map((author) => {
     const authorResults = allAuthors.find((p) => p.slug === author)

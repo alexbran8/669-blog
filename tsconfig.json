@@ -19,6 +19,7 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/data/*": ["data/*"],
+      "@/i18n/*": ["i18n/*"],
       "@/layouts/*": ["layouts/*"],
       "@/css/*": ["css/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]

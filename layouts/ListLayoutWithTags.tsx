@@ -3,13 +3,12 @@
 
 import { usePathname } from 'next/navigation'
 import { slug } from 'github-slugger'
-import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
-import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
+import { FormattedDate, FormattedMessage, useIntl } from 'react-intl'
 
 interface PaginationProps {
   totalPages: number
@@ -24,7 +23,7 @@ interface ListLayoutProps {
 
 function Pagination({ totalPages, currentPage }: PaginationProps) {
   const pathname = usePathname()
-  const basePath = pathname.split('/')[1]
+  const basePath = pathname.replace(/\/page\/\d+\/?$/, '').replace(/\/$/, '')
   const prevPage = currentPage - 1 > 0
   const nextPage = currentPage + 1 <= totalPages
 
@@ -33,28 +32,32 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
       <nav className="flex justify-between">
         {!prevPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
-            Previous
+            <FormattedMessage id="list.previous" defaultMessage="Previous" />
           </button>
         )}
         {prevPage && (
           <Link
-            href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
+            href={currentPage - 1 === 1 ? basePath : `${basePath}/page/${currentPage - 1}`}
             rel="prev"
           >
-            Previous
+            <FormattedMessage id="list.previous" defaultMessage="Previous" />
           </Link>
         )}
         <span>
-          {currentPage} of {totalPages}
+          <FormattedMessage
+            id="list.pageCount"
+            defaultMessage="{current} of {total}"
+            values={{ current: currentPage, total: totalPages }}
+          />
         </span>
         {!nextPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
-            Next
+            <FormattedMessage id="list.next" defaultMessage="Next" />
           </button>
         )}
         {nextPage && (
-          <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
-            Next
+          <Link href={`${basePath}/page/${currentPage + 1}`} rel="next">
+            <FormattedMessage id="list.next" defaultMessage="Next" />
           </Link>
         )}
       </nav>
@@ -69,6 +72,7 @@ export default function ListLayoutWithTags({
   pagination,
 }: ListLayoutProps) {
   const pathname = usePathname()
+  const intl = useIntl()
   const tagCounts = tagData as Record<string, number>
   const tagKeys = Object.keys(tagCounts)
   const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
@@ -80,20 +84,26 @@ export default function ListLayoutWithTags({
       <div>
         <div className="pb-6 pt-6">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            {title}
+            {title === 'All Posts' ? (
+              <FormattedMessage id="list.allPosts" defaultMessage="All posts" />
+            ) : (
+              title
+            )}
           </h1>
         </div>
         <div className="flex sm:space-x-24">
           <div className="hidden h-full max-h-screen min-w-[280px] max-w-[280px] flex-wrap overflow-auto rounded bg-gray-50 pt-5 shadow-md dark:bg-gray-900/70 dark:shadow-gray-800/40 sm:flex">
             <div className="px-6 py-4">
-              {pathname.startsWith('/blog') ? (
-                <h3 className="font-bold uppercase text-primary-500">All Posts</h3>
+              {pathname.includes('/blog') ? (
+                <h3 className="font-bold uppercase text-primary-500">
+                  <FormattedMessage id="list.allPosts" defaultMessage="All posts" />
+                </h3>
               ) : (
                 <Link
                   href={`/blog`}
                   className="font-bold uppercase text-gray-700 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-500"
                 >
-                  All Posts
+                  <FormattedMessage id="list.allPosts" defaultMessage="All posts" />
                 </Link>
               )}
               <ul>
@@ -108,7 +118,10 @@ export default function ListLayoutWithTags({
                         <Link
                           href={`/tags/${slug(t)}`}
                           className="px-3 py-2 text-sm font-medium uppercase text-gray-500 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-500"
-                          aria-label={`View posts tagged ${t}`}
+                          aria-label={intl.formatMessage(
+                            { id: 'tags.view', defaultMessage: 'View posts tagged {tag}' },
+                            { tag: t }
+                          )}
                         >
                           {`${t} (${tagCounts[t]})`}
                         </Link>
@@ -127,9 +140,13 @@ export default function ListLayoutWithTags({
                   <li key={path} className="py-5">
                     <article className="flex flex-col space-y-2 xl:space-y-0">
                       <dl>
-                        <dt className="sr-only">Published on</dt>
+                        <dt className="sr-only">
+                          <FormattedMessage id="post.publishedOn" defaultMessage="Published on" />
+                        </dt>
                         <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                          <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                          <time dateTime={date}>
+                            <FormattedDate value={date} year="numeric" month="long" day="numeric" />
+                          </time>
                         </dd>
                       </dl>
                       <div className="space-y-3">

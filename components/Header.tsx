@@ -1,3 +1,4 @@
+'use client'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 import Logo from '@/data/logo.svg'
@@ -5,6 +6,8 @@ import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
+import LocaleSwitcher from './LocaleSwitcher'
+import { FormattedMessage } from 'react-intl'
 
 const Header = () => {
   return (
@@ -35,9 +38,10 @@ const Header = () => {
               className="hidden font-medium text-gray-900 hover:text-primary-500 dark:text-gray-100 dark:hover:text-primary-400
               sm:block"
             >
-              {link.title}
+              <FormattedMessage id={link.messageId} defaultMessage={link.title} />
             </Link>
           ))}
+        <LocaleSwitcher />
         <SearchButton />
         <ThemeSwitch />
         <MobileNav />

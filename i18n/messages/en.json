@@ -1,0 +1,21 @@
+{
+  "nav.home": "Home",
+  "nav.blog": "Blog",
+  "nav.tags": "Tags",
+  "nav.about": "About",
+  "nav.language": "Language",
+  "nav.toggleMenu": "Toggle menu",
+  "home.latest": "Latest",
+  "home.noPosts": "No posts found.",
+  "home.allPosts": "All posts",
+  "post.readMore": "Read more",
+  "post.readMoreLabel": "Read more: {title}",
+  "post.publishedOn": "Published on",
+  "list.allPosts": "All posts",
+  "list.previous": "Previous",
+  "list.next": "Next",
+  "list.pageCount": "{current} of {total}",
+  "tags.title": "Tags",
+  "tags.none": "No tags found.",
+  "tags.view": "View posts tagged {tag}"
+}

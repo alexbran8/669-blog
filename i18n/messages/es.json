@@ -1,0 +1,21 @@
+{
+  "nav.home": "Inicio",
+  "nav.blog": "Blog",
+  "nav.tags": "Etiquetas",
+  "nav.about": "Acerca de",
+  "nav.language": "Idioma",
+  "nav.toggleMenu": "Abrir o cerrar el menú",
+  "home.latest": "Últimas publicaciones",
+  "home.noPosts": "No se encontraron publicaciones.",
+  "home.allPosts": "Todas las publicaciones",
+  "post.readMore": "Leer más",
+  "post.readMoreLabel": "Leer más: {title}",
+  "post.publishedOn": "Publicado el",
+  "list.allPosts": "Todas las publicaciones",
+  "list.previous": "Anterior",
+  "list.next": "Siguiente",
+  "list.pageCount": "{current} de {total}",
+  "tags.title": "Etiquetas",
+  "tags.none": "No se encontraron etiquetas.",
+  "tags.view": "Ver publicaciones con la etiqueta {tag}"
+}
