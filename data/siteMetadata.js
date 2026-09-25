@@ -4,6 +4,7 @@ const siteMetadata = {
   author: 'Alexandru Bran',
   headerTitle: 'Cycling Blog',
   showLogo: false,
+  showContactForm: false,
   description: 'Enjoy my latest posts',
   language: 'en-us',
   theme: 'system', // system, dark or light
@@ -12,7 +13,7 @@ const siteMetadata = {
   siteLogo: `${process.env.BASE_PATH}/static/images/logo.png`,
   image: `${process.env.BASE_PATH}/static/images/avatar.png`,
   socialBanner: `${process.env.BASE_PATH}/static/images/twitter-card.png`,
-  email: 'address@yoursite.com',
+  email: 'alexandru.bran@outlook.com',
   github: 'https://github.com',
   // twitter: 'https://twitter.com/Twitter',
   facebook: 'https://facebook.com',

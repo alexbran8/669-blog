@@ -6,6 +6,7 @@ import NewsletterForm from 'pliny/ui/NewsletterForm'
 import { FormattedDate, FormattedMessage, useIntl } from 'react-intl'
 import NextImage from 'next/image'
 import coverPhoto from '@/data/cover-photo-blurred.png'
+import ContactForm from '@/components/ContactForm'
 
 const MAX_DISPLAY = 5
 
@@ -105,6 +106,7 @@ export default function Home({ posts }) {
           </Link>
         </div>
       )}
+      {siteMetadata.showContactForm && <ContactForm />}
       {siteMetadata.newsletter?.provider && (
         <div className="flex items-center justify-center pt-4">
           <NewsletterForm />

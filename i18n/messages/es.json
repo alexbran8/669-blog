@@ -3,6 +3,7 @@
   "nav.blog": "Blog",
   "nav.tags": "Etiquetas",
   "nav.about": "Acerca de",
+  "nav.contact": "Contacto",
   "nav.language": "Idioma",
   "nav.toggleMenu": "Abrir o cerrar el menú",
   "home.latest": "Últimas publicaciones",
@@ -46,5 +47,17 @@
   "tag.tiempolibre": "Tiempo libre",
   "tag.trabajo": "Trabajo",
   "tag.viajes": "Viajes",
-  "tag.work": "Trabajo"
+  "tag.work": "Trabajo",
+  "contact.title": "Contáctame",
+  "contact.description": "¿Tienes alguna pregunta sobre ciclismo, entrenamiento o mecánica de bicicletas? Envíame un mensaje.",
+  "contact.name": "Nombre",
+  "contact.email": "Correo electrónico",
+  "contact.subject": "Asunto",
+  "contact.message": "Mensaje",
+  "contact.send": "Enviar mensaje",
+  "contact.from": "De",
+  "contact.sending": "Enviando…",
+  "contact.success": "Tu mensaje se ha enviado correctamente.",
+  "contact.error": "No se pudo enviar el mensaje. Inténtalo de nuevo.",
+  "contact.unconfigured": "El formulario de contacto aún no está configurado."
 }

@@ -3,6 +3,7 @@
   "nav.blog": "Blog",
   "nav.tags": "Tags",
   "nav.about": "About",
+  "nav.contact": "Contact",
   "nav.language": "Language",
   "nav.toggleMenu": "Toggle menu",
   "home.latest": "Latest",
@@ -46,5 +47,17 @@
   "tag.tiempolibre": "Free time",
   "tag.trabajo": "Work",
   "tag.viajes": "Travel",
-  "tag.work": "Work"
+  "tag.work": "Work",
+  "contact.title": "Contact me",
+  "contact.description": "Have a question about cycling, training, or bicycle mechanics? Send me a message.",
+  "contact.name": "Name",
+  "contact.email": "Email",
+  "contact.subject": "Subject",
+  "contact.message": "Message",
+  "contact.send": "Send message",
+  "contact.from": "From",
+  "contact.sending": "Sending…",
+  "contact.success": "Your message was sent successfully.",
+  "contact.error": "The message could not be sent. Please try again.",
+  "contact.unconfigured": "The contact form is not configured yet."
 }
