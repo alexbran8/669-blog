@@ -1,8 +1,8 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'CyclingCodeBlog',
+  title: 'Cycling Blog',
   author: 'Alexandru Bran',
-  headerTitle: 'CyclingCodeBlog',
+  headerTitle: 'Cycling Blog',
   description: 'Enjoy my latest posts',
   language: 'en-us',
   theme: 'system', // system, dark or light
