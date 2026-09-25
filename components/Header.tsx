@@ -7,20 +7,22 @@ import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 import LocaleSwitcher from './LocaleSwitcher'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 const Header = () => {
+  const intl = useIntl()
+
   return (
     <header className="flex items-center justify-between py-10">
       <div>
-        <Link href="/" aria-label={siteMetadata.headerTitle}>
+        <Link href="/" aria-label={intl.formatMessage({ id: 'site.title' })}>
           <div className="flex items-center justify-between">
             <div className="mr-3">
               <Logo />
             </div>
             {typeof siteMetadata.headerTitle === 'string' ? (
               <div className="hidden h-6 text-2xl font-semibold sm:block">
-                {siteMetadata.headerTitle}
+                <FormattedMessage id="site.title" defaultMessage="Cycling Blog" />
               </div>
             ) : (
               siteMetadata.headerTitle

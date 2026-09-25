@@ -22,12 +22,16 @@ export default function TagPage({ params }: { params: { locale: string; tag: str
   const locale = params.locale
   const tag = decodeURI(params.tag)
   const title = tag[0].toUpperCase() + tag.split(' ').join('-').slice(1)
+  const localePosts = getPostsForLocale(allBlogs, locale)
   const posts = allCoreContent(
-    sortPosts(
-      getPostsForLocale(allBlogs, locale).filter((post) =>
-        post.tags?.some((postTag) => slug(postTag) === tag)
-      )
-    )
+    sortPosts(localePosts.filter((post) => post.tags?.some((postTag) => slug(postTag) === tag)))
   )
-  return <ListLayout posts={posts} title={title} />
+  return (
+    <ListLayout
+      posts={posts}
+      tagSourcePosts={allCoreContent(sortPosts(localePosts))}
+      tagTitle={tag}
+      title={title}
+    />
+  )
 }

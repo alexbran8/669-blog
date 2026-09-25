@@ -1,6 +1,9 @@
+'use client'
+
 import Link from './Link'
 import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
+import { FormattedMessage } from 'react-intl'
 
 export default function Footer() {
   return (
@@ -18,7 +21,9 @@ export default function Footer() {
           <div>{` • `}</div>
           <div>{`© ${new Date().getFullYear()}`}</div>
           <div>{` • `}</div>
-          <Link href="/">{siteMetadata.title}</Link>
+          <Link href="/">
+            <FormattedMessage id="site.title" defaultMessage="Cycling Blog" />
+          </Link>
         </div>
         {/* <div className="mb-8 text-sm text-gray-500 dark:text-gray-400">
           <Link href="https://github.com/timlrx/tailwind-nextjs-starter-blog">

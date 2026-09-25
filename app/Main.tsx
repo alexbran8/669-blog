@@ -17,7 +17,7 @@ export default function Home({ posts }) {
             <FormattedMessage id="home.latest" defaultMessage="Latest" />
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            {siteMetadata.description}
+            <FormattedMessage id="site.description" defaultMessage="Enjoy my latest posts" />
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">

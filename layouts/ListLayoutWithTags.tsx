@@ -7,8 +7,8 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
-import tagData from 'app/tag-data.json'
 import { FormattedDate, FormattedMessage, useIntl } from 'react-intl'
+import TagLabel from '@/components/TagLabel'
 
 interface PaginationProps {
   totalPages: number
@@ -19,6 +19,8 @@ interface ListLayoutProps {
   title: string
   initialDisplayPosts?: CoreContent<Blog>[]
   pagination?: PaginationProps
+  tagSourcePosts?: CoreContent<Blog>[]
+  tagTitle?: string
 }
 
 function Pagination({ totalPages, currentPage }: PaginationProps) {
@@ -70,10 +72,18 @@ export default function ListLayoutWithTags({
   title,
   initialDisplayPosts = [],
   pagination,
+  tagSourcePosts,
+  tagTitle,
 }: ListLayoutProps) {
   const pathname = usePathname()
   const intl = useIntl()
-  const tagCounts = tagData as Record<string, number>
+  const tagCounts = (tagSourcePosts || posts).reduce<Record<string, number>>((counts, post) => {
+    post.tags?.forEach((tag) => {
+      const key = slug(tag)
+      counts[key] = (counts[key] || 0) + 1
+    })
+    return counts
+  }, {})
   const tagKeys = Object.keys(tagCounts)
   const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
 
@@ -84,7 +94,9 @@ export default function ListLayoutWithTags({
       <div>
         <div className="pb-6 pt-6">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            {title === 'All Posts' ? (
+            {tagTitle ? (
+              <TagLabel text={tagTitle} />
+            ) : title === 'All Posts' ? (
               <FormattedMessage id="list.allPosts" defaultMessage="All posts" />
             ) : (
               title
@@ -108,11 +120,16 @@ export default function ListLayoutWithTags({
               )}
               <ul>
                 {sortedTags.map((t) => {
+                  const translatedTag = intl.formatMessage({
+                    id: `tag.${slug(t)}`,
+                    defaultMessage: t,
+                  })
                   return (
                     <li key={t} className="my-3">
                       {pathname.split('/tags/')[1] === slug(t) ? (
                         <h3 className="inline px-3 py-2 text-sm font-bold uppercase text-primary-500">
-                          {`${t} (${tagCounts[t]})`}
+                          <TagLabel text={t} />
+                          {` (${tagCounts[t]})`}
                         </h3>
                       ) : (
                         <Link
@@ -120,10 +137,11 @@ export default function ListLayoutWithTags({
                           className="px-3 py-2 text-sm font-medium uppercase text-gray-500 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-500"
                           aria-label={intl.formatMessage(
                             { id: 'tags.view', defaultMessage: 'View posts tagged {tag}' },
-                            { tag: t }
+                            { tag: translatedTag }
                           )}
                         >
-                          {`${t} (${tagCounts[t]})`}
+                          <TagLabel text={t} />
+                          {` (${tagCounts[t]})`}
                         </Link>
                       )}
                     </li>
